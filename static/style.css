@@ -1,0 +1,22 @@
+body {
+  font-family: sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+nav {
+  background: #333;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+}
+nav a {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+section,
+header {
+  padding: 4rem 2rem;
+  border-bottom: 1px solid #eee;
+}
