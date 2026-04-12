@@ -1,22 +1,304 @@
-body {
-  font-family: sans-serif;
-  line-height: 1.6;
+:root {
+  --bg-color: #0c0c0c;
+  --text-color: #d1d1d1;
+  --accent-color: #00ff00;
+  --prompt-color: #00ff00;
+  --font-family:
+    "JetBrains Mono", "Fira Code", "Courier New", Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-nav {
-  background: #333;
-  padding: 1rem;
-  position: sticky;
-  top: 0;
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
 }
-nav a {
-  color: white;
-  margin-right: 1rem;
+
+#terminal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+section {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid #222;
+  position: relative;
+  z-index: 1;
+}
+
+#projects {
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  justify-content: center;
+}
+
+#projects .prompt {
+  padding: 0 2rem;
+  position: absolute;
+  top: 4rem;
+  left: 0;
+}
+
+.prompt::before {
+  content: "root@whoami:~$ ";
+  color: var(--prompt-color);
+  font-weight: bold;
+}
+
+.command {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+.output {
+  margin-top: 1rem;
+  white-space: pre-wrap;
+  color: #bbb;
+}
+
+.output a {
+  color: var(--accent-color);
   text-decoration: none;
 }
-section,
-header {
-  padding: 4rem 2rem;
-  border-bottom: 1px solid #eee;
+
+.output a:hover {
+  text-decoration: underline;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+  background: rgba(12, 12, 12, 0.8);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #333;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+nav a:hover {
+  color: var(--accent-color);
+}
+
+.hidden-lock {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.5rem;
+  opacity: 0.1;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: opacity 0.3s;
+  z-index: 1000;
+}
+
+.hidden-lock:hover {
+  opacity: 1;
+  font-size: 1.5rem;
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+}
+
+.slider-content {
+  flex-grow: 1;
+  height: 100%;
+  text-align: left;
+  padding: 2rem 4rem;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#whoami .output {
+  padding: 0 2rem;
+  max-width: 1000px;
+  align-self: center;
+}
+
+#contact .output {
+  text-align: left;
+}
+
+.slider-content h3 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.slider-content p {
+  color: #bbb;
+  margin-bottom: 1.5rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.slider-arrow {
+  background: transparent;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  padding: 1rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1.5rem;
+  transition: all 0.2s;
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.slider-arrow.prev {
+  left: 2rem;
+}
+.slider-arrow.next {
+  right: 2rem;
+}
+
+.slider-arrow:hover {
+  background: var(--accent-color);
+  color: #000;
+}
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-bottom: 2rem;
+  background: transparent;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--accent-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: var(--accent-color);
+}
+
+#blog {
+  justify-content: flex-start;
+  padding-top: 6rem;
+}
+
+.blog-card {
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid #333;
+  padding: 1rem;
+  transition: transform 0.2s;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
+}
+
+.blog-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.blog-card h3 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.blog-card p {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+#upload-btn {
+  background: transparent;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-top: 2rem;
+  font-family: inherit;
+}
+
+#upload-btn:hover {
+  background: var(--accent-color);
+  color: #000;
+}
+
+#upload-form {
+  display: none;
+  background: #1a1a1a;
+  padding: 2rem;
+  border: 1px solid #333;
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+#upload-form input,
+#upload-form textarea {
+  width: 100%;
+  background: #000;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  font-family: inherit;
+}
+
+#upload-form button {
+  background: var(--accent-color);
+  color: #000;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
 }

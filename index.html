@@ -1,23 +1,46 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="/static/style.css" />
-    <title>Exodus | Portfolio</title>
-  </head>
-  <body>
-    <nav>
-      <a href="#home">Inicio</a>
-      <a href="#about">Sobre mí</a>
-      <a href="#work">Mi Trabajo</a>
-      <a href="#projects">Proyectos</a>
-      <a href="#contact">Contacto</a>
-    </nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>whoami | root</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <canvas id="terminal-bg"></canvas>
+  <nav>
+    <a href="#whoami">Whoami</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+    <a href="/blog">Blog</a>
+  </nav>
 
-    <header id="home"><h1>Hola, soy Exodus</h1></header>
-    <section id="about"><h2>Sobre mí</h2></section>
-    <section id="work"><h2>Mi Trabajo</h2></section>
-    <section id="projects"><h2>Proyectos</h2></section>
-    <section id="contact"><h2>Contacto</h2></section>
-  </body>
+  <section id="whoami">
+    <div class="prompt"><span class="command">cat me/whoami.txt</span></div>
+    <div class="output">Soy Mario, un estudiante de informática y ciberseguridad, hacker y programador apasionado por la tecnología. Desde pequeño siempre me han encantado los ordenadores, pero no fue hasta los 20 años que me quité el vértigo que me daba la informática y me puse a estudiar.
+<br><br>Tras hacer programación una temporada y estar un poco perdido, decídi cambiar al ámbito de la ciberseguridad, y ahí es donde encontré lo que realmente me motivó a convertirme en lo que soy ahora.
+<br><br>Gracias a la ciberseguridad he ganado una ambición, disciplina, habilidad y conocimientos que no había desarrollado en ningún campo jamás. En el proceso de estudiar descubrí que una de las cosas que mas disfruto es comprender las máquinas, la tecnología y las redes, y disfruto enormemente del estudio de todas estas cosas.
+<br><br>El hacking y la programación son mis habilidades centrales, pero me interesa una infinidad más de disciplinas, en algunas de ellas me considero experimentado, desde las redes hasta la criptografía, apasionado por el hardware, Linux y el desarrollo de bajo nivel. Mi mayor aspiración es continuar aprendiendo y mejorar como programador y hacker, seguir investigando y documentando mi proceso de aprendizaje y conocer a personas que compartan mi pasión</div>
+  </section>
+
+  <section id="projects">
+    <div class="prompt"><span class="command">ls projects/</span></div>
+    <div class="slider-container">
+      <button class="slider-arrow prev" id="prev-project">←</button>
+      <div class="slider-content" id="slider-content">
+        <!-- Projects will be dynamically inserted here -->
+      </div>
+      <button class="slider-arrow next" id="next-project">→</button>
+    </div>
+    <div class="slider-dots" id="slider-dots"></div>
+  </section>
+
+  <section id="contact">
+    <div class="prompt"><span class="command">mylinks</span></div>
+    <div class="output">Email<br><a href="mailto:galizaragozadev@gmail.com">galizaragozadev@gmail.com</a><br><br>Medium<br><a href="https://medium.com/@galizaragozadev" target="_blank">medium.com/@galizaragozadev</a><br><br>LinkedIn<br><a href="https://www.linkedin.com/in/mario-hinojosa/" target="_blank">linkedin.com/in/mario-hinojosa/</a><br><br>GitHub<br><a href="https://github.com/galizaragoza" target="_blank">github.com/galizaragoza</a><br><br>YouTube<br><a href="https://www.youtube.com/@X02_sec" target="_blank">youtube.com/@X02_sec</a><br><br>Writeups<br><a href="https://galizaragozadev.gitbook.io/galizaragozadev-docs" target="_blank">galizaragozadev-docs</a><br><br>My notes<br><a href="https://galizaragoza.github.io/x02_vault/" target="_blank">x02_vault</a></div>
+  </section>
+
+  <script src="/static/slider.js"></script>
+  <script src="/static/terminal-bg.js"></script>
+</body>
 </html>

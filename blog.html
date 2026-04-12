@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>whoami | blog</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <canvas id="terminal-bg"></canvas>
+  <nav>
+    <a href="/">←</a>
+    <a href="#" id="lock-icon" class="hidden-lock">🔒</a>
+  </nav>
+
+  <section id="blog">
+    <div class="prompt"><span class="command">ls work/blog/</span></div>
+    
+    <div id="blog-container" class="blog-grid">
+      <!-- Posts will be loaded here -->
+    </div>
+
+    <button id="upload-btn" style="display: none;">NEW_POST</button>
+
+    <div id="upload-form">
+      <h3>CREATE NEW POST</h3>
+      <input type="text" id="post-title" placeholder="Title">
+      <textarea id="post-description" placeholder="Description"></textarea>
+      <input type="text" id="post-thumbnail" placeholder="Thumbnail URL">
+      <input type="text" id="post-url" placeholder="Post URL">
+      <input type="text" id="post-platform" placeholder="Platform (e.g. YouTube, Medium)">
+      <button id="submit-post">SUBMIT</button>
+      <button id="cancel-upload" style="background: #333; color: #fff; margin-left: 1rem;">CANCEL</button>
+    </div>
+
+    <div id="auth-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1a1a1a; padding: 2rem; border: 1px solid var(--accent-color); z-index: 1000;">
+      <h3>AUTHENTICATION REQUIRED</h3>
+      <input type="password" id="admin-password" placeholder="Password" style="width: 100%; margin: 1rem 0; padding: 0.5rem; background: #000; border: 1px solid #333; color: #fff;">
+      <button id="login-btn" style="background: var(--accent-color); border: none; padding: 0.5rem 1rem; cursor: pointer;">LOGIN</button>
+      <button id="close-auth" style="background: #333; color: #fff; border: none; padding: 0.5rem 1rem; margin-left: 0.5rem; cursor: pointer;">CLOSE</button>
+    </div>
+  </section>
+
+  <script src="/static/blog.js"></script>
+  <script src="/static/terminal-bg.js"></script>
+</body>
+</html>
