@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Ni Python, ni C; Por qué Go es el mejor lenguaje de programación",
+    "description": "Aprendemos a programar con Python, JavaScript o C, según qué estudiemos… Pero ¿y si hubiese una opción mejor?",
+    "thumbnail": "https://araintel.com/wp-content/uploads/2026/05/yyy-300x169.jpg",
+    "url": "https://araintel.com/articulos/ni-python-ni-c-este-es-el-mejor-lenguaje-para-aprender/",
+    "platform": "AraIntel"
+  },
+  {
+    "id": 2,
+    "title": "Entendiendo la arquitectura de Docker: Del Daemon al Kernel",
+    "description": "Docker usa namespaces, cgroups y capabilities del kernel de Linux para crear contenedores aislados y eficientes sin el overhead de una VM tradicional.",
+    "thumbnail": "https://araintel.com/wp-content/uploads/2026/05/doocker-300x169.jpg",
+    "url": "https://araintel.com/articulos/entendiendo-la-arquitectura-de-docker-del-daemon-al-kernel/",
+    "platform": "AraIntel"
+  },
+  {
+    "id": 3,
+    "title": "Ocho tips según Anthropic para escribir prompts eficientes",
+    "description": "Anthropic compartió ocho consejos prácticos sobre cómo optimizar prompts y aprovechar mejor los modelos de lenguaje.",
+    "thumbnail": "https://araintel.com/wp-content/uploads/2026/04/portiu-300x169.jpg",
+    "url": "https://araintel.com/articulos/ocho-tips-segun-anthropic-para-escribir-prompts-eficientes/",
+    "platform": "AraIntel"
+  },
+  {
+    "id": 4,
+    "title": "Parcheadas 271 vulns en Firefox 150 gracias a Mythos",
+    "description": "La colaboración de Mozilla y Anthropic logró hallar y solucionar 271 vulnerabilidades en la última versión del buscador con ayuda de Claude Mythos.",
+    "thumbnail": "https://araintel.com/wp-content/uploads/2026/04/Firefox-logo-300x150.jpg",
+    "url": "https://araintel.com/noticias/mozilla-encuentra-271-bugs-gracias-a-mythos/",
+    "platform": "AraIntel"
+  },
+  {
+    "id": 5,
+    "title": "El hype de Mythos y el futuro de la seguridad",
+    "description": "¿Es Mythos marketing? Ni una cosa ni la otra. La realidad y el progreso no se detienen, pero tampoco es como Anthropic pretende vender.",
+    "thumbnail": "https://araintel.com/wp-content/uploads/2026/04/myth-300x169.jpg",
+    "url": "https://araintel.com/articulos/el-hype-con-claude-mythos-y-el-futuro-de-la-ciberseguridad/",
+    "platform": "AraIntel"
+  },
+  {
+    "id": 6,
+    "title": "QUIC, el protocolo que viene a sustituir a TCP",
+    "description": "El protocolo que combina lo mejor de UDP y TCP e integra seguridad criptográfica, full duplex con persistencia de sesión y baja latencia.",
+    "thumbnail": "https://araintel.com/wp-content/uploads/2026/04/yuh-300x169.jpg",
+    "url": "https://araintel.com/articulos/quic-el-protocolo-que-viene-a-sustituir-a-tcp/",
+    "platform": "AraIntel"
+  }
+]

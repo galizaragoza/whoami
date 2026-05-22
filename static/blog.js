@@ -54,10 +54,15 @@ document.addEventListener('DOMContentLoaded', () => {
         a.href = post.url;
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
-        a.textContent = `Read on ${post.platform}`;
+        a.textContent = `Leer en ${post.platform}`;
 
         output.appendChild(a);
-        card.append(img, h3, p, output);
+
+        const body = document.createElement('div');
+        body.className = 'blog-card-body';
+        body.append(h3, p, output);
+
+        card.append(img, body);
         blogContainer.appendChild(card);
       });
     } catch (err) {

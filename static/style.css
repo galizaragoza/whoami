@@ -3,8 +3,14 @@
   --text-color: #d1d1d1;
   --accent-color: #00ff00;
   --prompt-color: #00ff00;
-  --font-family:
-    "JetBrains Mono", "Fira Code", "Courier New", Courier, monospace;
+  --font-family: "JetBrains Mono", "Fira Code", "Courier New", Courier, monospace;
+  --card-bg: #0e0e0e;
+  --border-dim: #1a1a1a;
+  --glow: 0 0 12px rgba(0, 255, 0, 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 * {
@@ -22,6 +28,22 @@ body {
   position: relative;
 }
 
+/* subtle CRT scanline overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.012) 3px,
+    rgba(0, 0, 0, 0.012) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
 #terminal-bg {
   position: fixed;
   top: 0;
@@ -29,34 +51,66 @@ body {
   width: 100%;
   height: 100%;
   z-index: -1;
-  opacity: 0.15;
+  opacity: 0.1;
   pointer-events: none;
 }
 
 section {
   width: 100%;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 6rem 4rem 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid var(--border-dim);
   position: relative;
   z-index: 1;
 }
 
-#projects {
-  padding: 0;
-  height: 100vh;
-  overflow: hidden;
-  justify-content: center;
+/* ── nav ── */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(12, 12, 12, 0.88);
+  padding: 0.85rem 2.5rem;
+  border-bottom: 1px solid var(--border-dim);
+  z-index: 100;
+  backdrop-filter: blur(14px);
 }
 
-#projects .prompt {
-  padding: 0 2rem;
-  position: absolute;
-  top: 4rem;
-  left: 0;
+.nav-brand {
+  color: var(--accent-color);
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  user-select: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  color: #888;
+  text-decoration: none;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: color 0.15s;
+}
+
+nav a:hover {
+  color: var(--accent-color);
+}
+
+/* ── prompt / command ── */
+.prompt {
+  margin-bottom: 1.5rem;
 }
 
 .prompt::before {
@@ -68,14 +122,14 @@ section {
 .command {
   color: #fff;
   font-weight: bold;
-  margin-bottom: 1.5rem;
-  display: inline-block;
 }
 
+/* ── output ── */
 .output {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   white-space: pre-wrap;
-  color: #bbb;
+  color: #888;
+  line-height: 1.9;
 }
 
 .output a {
@@ -87,48 +141,26 @@ section {
   text-decoration: underline;
 }
 
-nav {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  gap: 2rem;
-  background: rgba(12, 12, 12, 0.8);
-  padding: 1rem 2rem;
-  border-bottom: 1px solid #333;
-  z-index: 100;
-  backdrop-filter: blur(10px);
+/* ── whoami ── */
+#whoami .output {
+  max-width: 860px;
+  text-align: left;
 }
 
-nav a {
-  color: var(--text-color);
-  text-decoration: none;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+/* ── projects slider ── */
+#projects {
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  justify-content: center;
 }
 
-nav a:hover {
-  color: var(--accent-color);
-}
-
-.hidden-lock {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  font-size: 0.5rem;
-  opacity: 0.1;
-  text-decoration: none;
-  color: var(--text-color);
-  transition: opacity 0.3s;
-  z-index: 1000;
-}
-
-.hidden-lock:hover {
-  opacity: 1;
-  font-size: 1.5rem;
+#projects .prompt {
+  padding: 0 4rem;
+  position: absolute;
+  top: 4.5rem;
+  left: 0;
+  margin-bottom: 0;
 }
 
 .slider-container {
@@ -138,91 +170,193 @@ nav a:hover {
   position: relative;
   width: 100%;
   height: 100%;
-  flex-grow: 1;
 }
 
 .slider-content {
   flex-grow: 1;
   height: 100%;
-  text-align: left;
-  padding: 2rem 4rem;
-  background: transparent;
+  padding: 2rem 8rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  transition: opacity 0.22s ease;
 }
 
-#whoami .output {
-  padding: 0 2rem;
-  max-width: 1000px;
-  align-self: center;
-  text-align: left;
+.slider-content.fading {
+  opacity: 0;
 }
 
-#contact .output {
-  text-align: left;
+.slide-counter {
+  font-size: 0.72rem;
+  color: var(--accent-color);
+  opacity: 0.45;
+  letter-spacing: 4px;
+  margin-bottom: 2rem;
 }
 
 .slider-content h3 {
-  color: var(--accent-color);
-  margin-bottom: 1rem;
-  font-size: 2rem;
+  color: #f0f0f0;
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+  max-width: 680px;
+  line-height: 1.25;
 }
 
 .slider-content p {
-  color: #bbb;
-  margin-bottom: 1.5rem;
-  max-width: 800px;
+  color: #666;
+  margin-bottom: 2.5rem;
+  max-width: 560px;
+  line-height: 1.9;
+  font-size: 0.88rem;
+}
+
+.slider-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--accent-color);
+  border: 1px solid rgba(0, 255, 0, 0.35);
+  padding: 0.6rem 1.4rem;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  background: transparent;
+}
+
+.slider-cta:hover {
+  background: var(--accent-color);
+  color: #000;
+  border-color: var(--accent-color);
+  box-shadow: var(--glow);
 }
 
 .slider-arrow {
   background: transparent;
-  color: var(--accent-color);
-  border: 1px solid var(--accent-color);
-  padding: 1rem;
+  color: rgba(0, 255, 0, 0.35);
+  border: 1px solid rgba(0, 255, 0, 0.15);
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   font-family: inherit;
-  font-size: 1.5rem;
+  font-size: 1rem;
   transition: all 0.2s;
   z-index: 10;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  flex-shrink: 0;
 }
 
-.slider-arrow.prev {
-  left: 2rem;
-}
-.slider-arrow.next {
-  right: 2rem;
-}
+.slider-arrow.prev { left: 2rem; }
+.slider-arrow.next { right: 2rem; }
 
 .slider-arrow:hover {
-  background: var(--accent-color);
-  color: #000;
+  color: var(--accent-color);
+  border-color: rgba(0, 255, 0, 0.5);
+  box-shadow: var(--glow);
 }
 
 .slider-dots {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  padding-bottom: 2rem;
-  background: transparent;
+  gap: 0.6rem;
+  padding-bottom: 2.5rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 .dot {
-  width: 10px;
-  height: 10px;
-  border: 1px solid var(--accent-color);
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(0, 255, 0, 0.3);
   border-radius: 50%;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
 .dot.active {
   background: var(--accent-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 6px var(--accent-color);
 }
 
+.dot:hover {
+  border-color: var(--accent-color);
+}
+
+/* ── contact grid ── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 1px;
+  margin-top: 1.5rem;
+  max-width: 900px;
+  background: var(--border-dim);
+  border: 1px solid var(--border-dim);
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.2rem 1.4rem;
+  background: var(--bg-color);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.contact-card:hover {
+  background: #111;
+}
+
+.contact-card:hover .contact-label {
+  opacity: 1;
+}
+
+.contact-label {
+  font-size: 0.62rem;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.55;
+  transition: opacity 0.15s;
+}
+
+.contact-value {
+  font-size: 0.78rem;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── hidden lock ── */
+.hidden-lock {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.5rem;
+  opacity: 0.07;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: opacity 0.3s, font-size 0.3s;
+  z-index: 1000;
+}
+
+.hidden-lock:hover {
+  opacity: 1;
+  font-size: 1.5rem;
+}
+
+/* ── blog ── */
 #blog {
   justify-content: flex-start;
   padding-top: 6rem;
@@ -231,11 +365,66 @@ nav a:hover {
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  gap: 1px;
   width: 100%;
   margin-top: 1.5rem;
+  background: var(--border-dim);
+  border: 1px solid var(--border-dim);
 }
 
+.blog-card {
+  background: var(--bg-color);
+  transition: background 0.18s;
+  cursor: default;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card:hover {
+  background: #0f0f0f;
+}
+
+.blog-card img {
+  width: 100%;
+  height: 155px;
+  object-fit: cover;
+  display: block;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.blog-card:hover img {
+  opacity: 0.9;
+}
+
+.blog-card-body {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.blog-card h3 {
+  color: #ccc;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.blog-card p {
+  font-size: 0.78rem;
+  color: #4a4a4a;
+  margin-bottom: 1rem;
+  line-height: 1.7;
+  flex-grow: 1;
+}
+
+.blog-card .output {
+  margin-top: 0;
+}
+
+/* ── auth modal ── */
 .auth-modal {
   display: none;
   flex-direction: column;
@@ -243,90 +432,84 @@ nav a:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1a1a1a;
+  background: #090909;
   padding: 2rem;
-  border: 1px solid var(--accent-color);
+  border: 1px solid rgba(0, 255, 0, 0.25);
   z-index: 1000;
-  min-width: 280px;
+  min-width: 300px;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.9), var(--glow);
 }
 
 .auth-modal h3 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: var(--accent-color);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
 }
 
 .auth-modal input {
   width: 100%;
   margin: 0 0 1rem;
-  padding: 0.5rem;
+  padding: 0.6rem 0.8rem;
   background: #000;
-  border: 1px solid #333;
+  border: 1px solid #1e1e1e;
   color: #fff;
   font-family: inherit;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.auth-modal input:focus {
+  border-color: rgba(0, 255, 0, 0.35);
 }
 
 .auth-modal .btn-login {
   background: var(--accent-color);
   color: #000;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   cursor: pointer;
   font-family: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  font-weight: bold;
+  transition: opacity 0.15s;
 }
 
+.auth-modal .btn-login:hover { opacity: 0.85; }
+
 .auth-modal .btn-close {
-  background: #333;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
+  background: transparent;
+  color: #444;
+  border: 1px solid #1e1e1e;
+  padding: 0.6rem 1.2rem;
   margin-left: 0.5rem;
   cursor: pointer;
   font-family: inherit;
+  font-size: 0.78rem;
+  transition: color 0.15s, border-color 0.15s;
 }
 
-.auth-modal.visible {
-  display: flex;
+.auth-modal .btn-close:hover {
+  color: #aaa;
+  border-color: #333;
 }
 
-.blog-card {
-  background: rgba(26, 26, 26, 0.8);
-  border: 1px solid #333;
-  padding: 1rem;
-  transition: transform 0.2s, border-color 0.2s;
-  cursor: default;
-}
+.auth-modal.visible { display: flex; }
 
-.blog-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--accent-color);
-}
-
-.blog-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  margin-bottom: 1rem;
-}
-
-.blog-card h3 {
-  color: #fff;
-  margin-bottom: 0.5rem;
-}
-
-.blog-card p {
-  font-size: 0.9rem;
-  color: #888;
-  margin-bottom: 1rem;
-}
-
+/* ── upload ── */
 #upload-btn {
   background: transparent;
   color: var(--accent-color);
-  border: 1px solid var(--accent-color);
-  padding: 0.5rem 1rem;
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  padding: 0.5rem 1.2rem;
   cursor: pointer;
   margin-top: 2rem;
   font-family: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  transition: all 0.2s;
 }
 
 #upload-btn:hover {
@@ -336,29 +519,48 @@ nav a:hover {
 
 #upload-form {
   display: none;
-  background: #1a1a1a;
+  background: #090909;
   padding: 2rem;
-  border: 1px solid #333;
+  border: 1px solid var(--border-dim);
   margin-top: 1rem;
   width: 100%;
   max-width: 600px;
+}
+
+#upload-form h3 {
+  color: var(--accent-color);
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
 }
 
 #upload-form input,
 #upload-form textarea {
   width: 100%;
   background: #000;
-  border: 1px solid #333;
-  color: #fff;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+  border: 1px solid #1a1a1a;
+  color: #ccc;
+  padding: 0.6rem;
+  margin-bottom: 0.8rem;
   font-family: inherit;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#upload-form input:focus,
+#upload-form textarea:focus {
+  border-color: rgba(0, 255, 0, 0.3);
 }
 
 #upload-form button {
   background: var(--accent-color);
   color: #000;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
