@@ -41,7 +41,7 @@ function draw() {
 
         if (drops[i] * fontSize > height) {
             if (Math.random() > 0.95) {
-                drops[i] = 0;
+                drops[i] = Math.random() * -20;
             }
         }
     }

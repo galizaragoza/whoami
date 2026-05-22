@@ -25,17 +25,28 @@ const dotsContainer = document.getElementById('slider-dots');
 
 function updateSlider() {
   const project = projects[currentIndex];
-  sliderContent.innerHTML = `
-    <h3>${project.title}</h3>
-    <p>${project.description}</p>
-    <div class="output">
-      <a href="${project.link}" target="_blank">VIEW_PROJECT</a>
-    </div>
-  `;
 
-  // Update dots
-  const dots = document.querySelectorAll('.dot');
-  dots.forEach((dot, index) => {
+  sliderContent.innerHTML = '';
+
+  const h3 = document.createElement('h3');
+  h3.textContent = project.title;
+
+  const p = document.createElement('p');
+  p.textContent = project.description;
+
+  const output = document.createElement('div');
+  output.className = 'output';
+
+  const a = document.createElement('a');
+  a.href = project.link;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  a.textContent = 'VIEW_PROJECT';
+
+  output.appendChild(a);
+  sliderContent.append(h3, p, output);
+
+  document.querySelectorAll('.dot').forEach((dot, index) => {
     dot.className = index === currentIndex ? 'dot active' : 'dot';
   });
 }

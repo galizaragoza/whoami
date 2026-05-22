@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,11 +33,11 @@
       <button id="cancel-upload" style="background: #333; color: #fff; margin-left: 1rem;">CANCEL</button>
     </div>
 
-    <div id="auth-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1a1a1a; padding: 2rem; border: 1px solid var(--accent-color); z-index: 1000;">
+    <div id="auth-modal" class="auth-modal">
       <h3>AUTHENTICATION REQUIRED</h3>
-      <input type="password" id="admin-password" placeholder="Password" style="width: 100%; margin: 1rem 0; padding: 0.5rem; background: #000; border: 1px solid #333; color: #fff;">
-      <button id="login-btn" style="background: var(--accent-color); border: none; padding: 0.5rem 1rem; cursor: pointer;">LOGIN</button>
-      <button id="close-auth" style="background: #333; color: #fff; border: none; padding: 0.5rem 1rem; margin-left: 0.5rem; cursor: pointer;">CLOSE</button>
+      <input type="password" id="admin-password" placeholder="Password">
+      <button id="login-btn" class="btn-login">LOGIN</button>
+      <button id="close-auth" class="btn-close">CLOSE</button>
     </div>
   </section>
 

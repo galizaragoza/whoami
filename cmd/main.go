@@ -62,7 +62,7 @@ func savePosts() {
 	}
 }
 
-func TimingSafeCompare(a, b string) bool {
+func timingSafeCompare(a, b string) bool {
 	return subtle.ConstantTimeCompare([]byte(a), []byte(b)) == 1
 }
 
@@ -90,37 +90,43 @@ func main() {
 
 	router.HandleFunc("POST /api/blog", func(w http.ResponseWriter, r *http.Request) {
 		password := r.Header.Get("X-Admin-Password")
-		if !TimingSafeCompare(password, adminPassword) {
+		if !timingSafeCompare(password, adminPassword) {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
 
+		r.Body = http.MaxBytesReader(w, r.Body, 1<<20)
 		var newPost BlogPost
 		if err := json.NewDecoder(r.Body).Decode(&newPost); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
+			http.Error(w, "Bad request", http.StatusBadRequest)
+			return
+		}
+		if newPost.Title == "" || newPost.URL == "" || newPost.Platform == "" {
+			http.Error(w, "title, url and platform are required", http.StatusBadRequest)
 			return
 		}
 
 		postsLock.Lock()
+		defer postsLock.Unlock()
 		newPost.ID = len(posts) + 1
 		posts = append(posts, newPost)
 		savePosts()
-		postsLock.Unlock()
 
 		w.WriteHeader(http.StatusCreated)
 		json.NewEncoder(w).Encode(newPost)
 	})
 
 	router.HandleFunc("POST /api/auth", func(w http.ResponseWriter, r *http.Request) {
+		r.Body = http.MaxBytesReader(w, r.Body, 1<<10)
 		var credentials struct {
 			Password string `json:"password"`
 		}
 		if err := json.NewDecoder(r.Body).Decode(&credentials); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
+			http.Error(w, "Bad request", http.StatusBadRequest)
 			return
 		}
 
-		if TimingSafeCompare(credentials.Password, adminPassword) {
+		if timingSafeCompare(credentials.Password, adminPassword) {
 			w.WriteHeader(http.StatusOK)
 		} else {
 			http.Error(w, "Invalid password", http.StatusUnauthorized)
